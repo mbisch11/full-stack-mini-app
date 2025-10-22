@@ -1,18 +1,20 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
+const fs = require('fs');
+const app = express();
 const port = 3000;
 
-app.use(cors);
+app.use(cors());
 
-const fs = require('fs');
 const filepath = "../users.json"
 
 app.get('/', (req, res) => {
     res.set('content-type', 'application/json');
     const response = {
-        this: 'is',
-        a: 'response'
+        commands: {
+            'Signup': '/signup/:user/:pass',
+            'Login': '/login/:user/:pass'
+        }
     }
     res.send(response);
 });
@@ -20,26 +22,49 @@ app.get('/', (req, res) => {
 app.get('/signup/:user/:pass', (req, res) => {
     res.set('content-type', 'application/json');
 
-    const username = req.params.user;
-    const password = req.params.pass;
+    var isExistingUser = false;
+    const paramUsername = req.params.user;
+    const paramPassword = req.params.pass;
     
     const filecontent = fs.readFileSync(filepath, {encoding: "utf-8"});
-    console.log(JSON.parse(filecontent));
+    const parseData = JSON.parse(filecontent);
+
+    parseData.users.forEach(person => {
+        if(person.username.toLowerCase() == paramUsername.toLowerCase() && person.password == paramPassword){
+            isExistingUser = true
+        }
+    });
+
+    if(!isExistingUser){
+        parseData.users.push({
+            username: paramUsername,
+            password: paramPassword,
+            id: parseData.users[parseData.users.length - 1].id + 1
+        });
+        fs.writeFileSync(filepath, JSON.stringify(parseData));
+        res.send(parseData.users[parseData.users.length - 1]);
+    }else{
+        res.send({
+            'user':null,
+            'pass':null,
+            'id':-1
+        });
+    }
 });
 
 app.get('/login/:user/:pass', (req, res) => {
     res.set('content-type', 'application/json');
     var validUser = false;
-    const userData = null;
+    var userData = null;
 
-    const username = req.params.user;
-    const password = req.params.pass;
+    const paramUsername = req.params.user;
+    const paramPassword = req.params.pass;
 
     const filecontent = fs.readFileSync(filepath, {encoding: "utf-8"});
     const parseData = JSON.parse(filecontent);
 
-    parseData.array.forEach(person => {
-        if(person.user == username && person.pass == password){
+    parseData.users.forEach(person => {
+        if(person.username.toLowerCase() == paramUsername.toLowerCase() && person.password == paramPassword){
             validUser = true;
             userData = person;
         }
@@ -52,10 +77,10 @@ app.get('/login/:user/:pass', (req, res) => {
             'user':null,
             'pass':null,
             'id':-1
-        })
+        });
     }
 });
 
 app.listen(port, () => {
     console.log(`Running on port ${port} access at http://localhost:${port}/`)
-})
+});

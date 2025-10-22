@@ -1,7 +1,1 @@
-[
-    {
-        "username": "Mike",
-        "password": "Bisch",
-        "id": 0
-    }
-]
+{"users":[{"username":"Mike","password":"Bisch","id":0},{"username":"Brett","password":"Cunningham","id":1}]}
