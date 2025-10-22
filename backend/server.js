@@ -1,23 +1,28 @@
-const http = require('http')
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const port = 3000;
 
-const hostname = '127.0.0.1'
+app.use(cors);
 
-const port = 3000
+const fs = require('fs');
+const filepath = "../users.json"
 
+app.get('/', (req, res) => {
+    res.set('content-type', 'application/json');
+    const response = {
+        this: 'is',
+        a: 'response'
+    }
+    res.send(response);
+});
 
-const server = http.createServer((req,res) => {
-    res.statusCode = 200
-    res.setHeader('Content-type', 'Application/Json')
-    res.setHeader('Access-Control-Allow-Origin','*')
+app.get('/signup/:user/:pass', (req, res) => {
+    res.set('content-type', 'application/json');
+    const filecontent = fs.readFileSync(filepath, {encoding: "utf-8"});
+    console.log(JSON.parse(filecontent));
+});
 
-    const {method, url} = req
-
-    res.write('Hello from Node.js!')
-
-    res.end()
+app.listen(port, () => {
+    console.log(`Running on port ${port} access at http://localhost:${port}/`)
 })
-
-server.listen(port, hostname, () => {
-    console.log(`Server running at ${hostname}:${port}.`)
-})
-
