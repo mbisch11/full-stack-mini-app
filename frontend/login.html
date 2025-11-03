@@ -5,14 +5,40 @@
         <script src="./client.js" defer></script>
     </head>
     <body>
-        <form name="Login" onsubmit="loginUser();">
-            <label>Username
-                <input id="usernameLogForm" type="text"/>
-            </label>
-            <label>Password
-                <input id="passwordLogForm" type="text"/>
-            </label>
-            <button type="submit">Submit</button>
-        </form>
+        <div id="header">
+            <div id="logoSide">
+                <img id="logo" src="./assets/fork-knife.png"/>
+                <h3 id="title">MealMate</h3>
+            </div>
+        </div>
+        <div id="logBody">
+            <h3 id="titleText">Log In!</h3>
+            <form name="Login" id="loginForm" onsubmit="loginUser();">
+                <label>Username
+                    <input id="usernameLogForm" type="text"/>
+                </label>
+                <label>Password
+                    <input id="passwordLogForm" type="text"/>
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div id="footer">
+            <div id="leftFoot">
+                <p>
+                    Made by Michael Bischoff and Brett Cuningham for our HCDD 411 class.
+                    <br/>
+                    Copyright 2025 nonexistant.
+                </p>
+            </div>
+            <div id="rightFoot">
+                <p>
+                    This is the section that would usually have a bunch of stuff.
+                    Stuff like a small quick navigation section, our social media,
+                    a contact us link, about us, terms of service, privacy policy, 
+                    etc. etc. blah blah blah blah blah. Lucky for us we have none of that.
+                </p>
+            </div>
+        </div>
     </body>
 </html>
