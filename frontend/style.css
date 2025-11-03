@@ -54,3 +54,12 @@ body{
 #headerBttn:active{
     scale: calc(0.975);
 }
+
+#titleText{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: x-large;
+}
+#secondText{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
