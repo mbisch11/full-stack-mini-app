@@ -85,7 +85,10 @@ app.get('/login/:user/:pass', (req, res) => {
 
 app.get('/isearch/:ingredients', async (req, res) => {
     res.set('content-type', 'application/json');
-    const url = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.SPOON_KEY}&ingredient=${req.params.ingredients}&number=1`;
+
+    const linkParams = req.params.ingredients.replace('/,/g', ',+');
+
+    const url = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.SPOON_KEY}&ingredients=${linkParams}&number=2`;
 
     const searchResults = await fetch(url);
     if(!searchResults.ok){
