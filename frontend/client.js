@@ -1,3 +1,11 @@
+function navLogin(){
+    window.location.assign("login.html");
+}
+
+function navSignup(){
+    window.location.assign("signup.html");
+}
+
 async function loginUser(){
     event.preventDefault();
     const username = document.querySelector("#usernameLogForm").value;
