@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const environment = require('dotenv').config();
 const app = express();
 const port = 3000;
 
@@ -13,7 +14,8 @@ app.get('/', (req, res) => {
     const response = {
         commands: {
             'Signup': '/signup/:user/:pass',
-            'Login': '/login/:user/:pass'
+            'Login': '/login/:user/:pass',
+            'Search by ingredient': 'isearch/:ingredients'
         }
     }
     res.send(response);
@@ -80,6 +82,33 @@ app.get('/login/:user/:pass', (req, res) => {
         });
     }
 });
+
+app.get('/isearch/:ingredients', async (req, res) => {
+    res.set('content-type', 'application/json');
+    const url = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.SPOON_KEY}&ingredient=${req.params.ingredients}&number=1`;
+
+    const searchResults = await fetch(url);
+    if(!searchResults.ok){
+        console.error("Error grabbing your search results, sorry :(");
+    }
+
+    parseResults = await searchResults.json();
+
+    res.send(parseResults);
+});
+
+app.get('/searchingredient/:ingredientName', async (req, res) => {
+    res.set('content-type', 'application/json');
+    const url = `https://api.spoonacular.com/food/ingredients/search?apiKey=${process.env.SPOON_KEY}&query=${req.params.ingredientName}&number=25`;
+
+    const searchResults = await fetch(url);
+    if(!searchResults.ok){
+        console.error("Error grabbing your search results, sorry :(");
+    }
+
+    parseResults = await searchResults.json();
+    res.send(parseResults);
+})
 
 app.listen(port, () => {
     console.log(`Running on port ${port} access at http://localhost:${port}/`)

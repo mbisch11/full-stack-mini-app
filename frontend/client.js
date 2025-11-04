@@ -8,8 +8,14 @@ async function loginUser(){
         if(!res.ok){
             throw new Error(`Error fetching login: ${res.status}`);
         }
+
         const parseRes = await res.json();
-        console.log(parseRes);
+        if(parseRes.id < 0){
+            console.error("Incorrect Login information")
+        }else{
+            sessionStorage.setItem("userSession", parseRes);
+            window.location.assign("dashboard.html")
+        }
     } catch (e) {
         console.log(e);
     }
@@ -25,8 +31,14 @@ async function signupUser(){
         if(!res.ok){
             throw new Error(`Error fetching login: ${res.status}`);
         }
+
         const parseRes = await res.json();
-        console.log(parseRes);
+        if(parseRes.id < 0){
+            console.error("Incorrect Login information")
+        }else{
+            sessionStorage.setItem("userSession", parseRes);
+            window.location.assign("dashboard.html")
+        }
     } catch (e) {
         console.log(e);
     }

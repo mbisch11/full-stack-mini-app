@@ -1,1 +1,8 @@
-{"users":[{"username":"Mike","password":"Bisch","id":0},{"username":"Brett","password":"Cunningham","id":1},{"username":"Example","password":"User","id":2}]}
+{
+    "users":
+    [
+        {"username":"Mike","password":"Bisch","id":0},
+        {"username":"Brett","password":"Cunningham","id":1},
+        {"username":"Example","password":"User","id":2}
+    ]
+}
