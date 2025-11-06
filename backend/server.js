@@ -45,12 +45,11 @@ app.get('/', (req, res) => {
                 'Get meal plan' : '/mealplan/get/:mealplanId'
             },
             User_Info : {
-                'Add to meal plan count' : '',
-                'Add to grocery count' : '',
-                'Add to recipes cooked' : '',
-                'Add to saved recipes' : '',
-                'Remove from saved recipes' : '',
-                'Get saved recipes' : '',
+                'Add to meal plan count' : '/userInfo/mealplanadd/:userId',
+                'Add to grocery count' : '/userInfo/groceryadd/:userId',
+                'Add to recipes cooked' : '/userInfo/groceryadd/:userId',
+                'Add to saved recipes' : '/userInfo/addsavedrecipe/:userId/:recipeId',
+                'Remove from saved recipes' : '/userInfo/removesavedrecipe/:userId/:recipeId',
                 'get user info' : ''
             }
         }
@@ -130,6 +129,192 @@ app.get('/login/:user/:pass', (req, res) => {
             'id':-1
         });
     }
+});
+
+app.get('/userInfo/mealplanadd/:userId', (req,res) => {
+    res.set('application-type', 'application/json');
+
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+    parseData.userInfo.forEach(info => {
+        if(info.userId == userId){
+            info.mealPlans += 1;
+            userData = info;
+        }
+    });
+
+    fs.writeFileSync(userInfoFilepath, JSON.stringify(parseData));
+    res.send(userData);
+});
+
+app.get('/userInfo/groceryadd/:userId', (req,res) => {
+    res.set('application-type', 'application/json');
+
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+    parseData.userInfo.forEach(info => {
+        if(info.userId == userId){
+            info.groceryLists += 1;
+            userData = info;
+        }
+    });
+
+    fs.writeFileSync(userInfoFilepath, JSON.stringify(parseData));
+    res.send(userData);
+});
+
+app.get('/userInfo/recipecooked/:userId', (req,res) => {
+    res.set('application-type', 'application/json');
+
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+    parseData.userInfo.forEach(info => {
+        if(info.userId == userId){
+            info.recipesCooked += 1;
+            userData = info;
+        }
+    });
+
+    fs.writeFileSync(userInfoFilepath, JSON.stringify(parseData));
+    res.send(userData);
+});
+
+app.get('/userInfo/addsavedrecipe/:userId/:recipeId', async (req,res) => {
+    res.set('application-type', 'application/json');
+
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+    const recipeId = parseInt(req.params.recipeId);
+    const url = `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${process.env.SPOON_KEY}`;
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+
+    const response = await fetch(url);
+    if(!response.ok){
+        console.error("Error geting your recipe :(");
+    }
+    const recipe = await response.json();
+    const savedRecipe = {
+        id : recipe.id,
+        name : recipe.title,
+        image : recipe.image
+    }
+
+    parseData.userInfo.forEach(info => {
+        if(info.userId == userId){
+            info.savedRecipes.push(savedRecipe);
+            userData = info;
+        }
+    });
+
+    fs.writeFileSync(userInfoFilepath, JSON.stringify(parseData));
+    res.send(userData);
+});
+
+app.get('/userInfo/removesavedrecipe/:userId/:recipeId', (req,res) => {
+    res.set('application-type', 'application/json');
+
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+    const recipeId = parseInt(req.params.recipeId);
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+
+    parseData.userInfo.forEach(info => {
+        if(info.userId == userId){
+            info.savedRecipes.filter(recipe => recipe.id != recipeId);
+            userData = info;
+        }
+    });
+
+    fs.writeFileSync(userInfoFilepath, JSON.stringify(parseData));
+    res.send(userData);
+});
+
+app.get('/userInfo/recipecooked/:userId', (req,res) => {
+    res.set('application-type', 'application/json');
+
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+    parseData.userInfo.forEach(info => {
+        if(info.userId == userId){
+            info.recipesCooked += 1;
+            userData = info;
+        }
+    });
+
+    fs.writeFileSync(userInfoFilepath, JSON.stringify(parseData));
+    res.send(userData);
+});
+
+app.get('/userinfo/:userId', (req,res) => {
+    res.set('content-type', 'application/json');
+    const filecontent = fs.readFileSync(userInfoFilepath, {encoding : "utf-8"});
+    const parseData = JSON.parse(filecontent);
+    const userId = parseInt(req.params.userId);
+    let userData = {
+            userId : -1,
+            groceryLists : 0,
+            mealPlans : 0,
+            recipesCooked : 0,
+            savedRecipes : []
+        }
+    
+    parseData.userInfo.forEach(user => {
+        if(user.userId == userId){
+            userData = user;
+        }
+    })
+
+    res.send(userData);
 });
 
 app.get('/recipesearch/:recipeName', async (req,res) => {
@@ -419,7 +604,7 @@ app.get('/mealplan/addmeal/:recipeId/:date/:mealplanId', async (req,res) => {
     })
     fs.writeFileSync(mealPlanFilepath, JSON.stringify(parseData));
     res.send(newMeal);
-})
+});
 
 app.delete('/mealplan/delete/:mealplanId', async (req,res) => {
     res.set('content-type', 'application/json');
@@ -433,7 +618,7 @@ app.delete('/mealplan/delete/:mealplanId', async (req,res) => {
         status : 200,
         message : `Meal plan id:${mealPlanId} has been successfully deleted`
     })
-})
+});
 
 app.delete('/meaplan/deletemeal/:mealplanId/:recpieId', (req,res) => {
     res.set('content-type', 'application/json');
@@ -449,7 +634,7 @@ app.delete('/meaplan/deletemeal/:mealplanId/:recpieId', (req,res) => {
             res.send(plan);
         }
     })
-})
+});
 
 app.listen(port, () => {
     console.log(`Running on port ${port} access at http://localhost:${port}/`)

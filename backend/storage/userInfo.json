@@ -1,3 +1,26 @@
 {
-    "userInfo" : []
+    "userInfo" : 
+        [
+            {
+                "userId" : 0,
+                "groceryLists" : 0,
+                "mealPlans" : 1,
+                "recipesCooked" : 0,
+                "savedRecipes" : []
+            },
+            {
+                "userId" : 1,
+                "groceryLists" : 0,
+                "mealPlans" : 0,
+                "recipesCooked" : 0,
+                "savedRecipes" : []
+            },
+            {
+                "userId" : 2,
+                "groceryLists" : 1,
+                "mealPlans" : 0,
+                "recipesCooked" : 0,
+                "savedRecipes" : []
+            }
+        ]
 }

@@ -1,1 +1,19 @@
-{"lists":[{"name":"FirstList","userId":2,"id":0,"items":[{"id":9037,"name":"avocado","image":"https://spoonacular.com/cdn/ingredients_250x250/avocado.jpg","aisle":"Produce"}]}]}
+{
+    "lists":
+    [
+        {
+            "name":"FirstList",
+            "userId":2,
+            "id":0,
+            "items":
+                [
+                    {
+                        "id":9037,
+                        "name":"avocado",
+                        "image":"https://spoonacular.com/cdn/ingredients_250x250/avocado.jpg",
+                        "aisle":"Produce"
+                    }
+                ]
+        }
+    ]
+}
