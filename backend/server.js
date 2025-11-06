@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
+const { start } = require('repl');
 const environment = require('dotenv').config();
 const app = express();
 const port = 3000;
@@ -22,11 +23,11 @@ app.get('/', (req, res) => {
             },
             Search_API : {
                 'Search for recipe by ingredient': '/isearch/:ingredients',
-                'Search for recipe by name': '',
-                'Get similar recipes': '',
-                'Get random recipes': '',
-                'Get ingredients by recipe id' : '',
-                'Get nutrition by recipe id': '',
+                'Search for recipe by name': '/recipesearch/:recipeName',
+                'Search for recipe by id': '/recipeinfo/:recipeId',
+                'Get similar recipes': '/similarrecipes/:recipeId',
+                'Get random recipes': '/randomrecipe',
+                'Get recipe instructions': '/recipeinstructions/:recipeId',
                 'Search for ingredient by name': '/searchingredient/:ingredientName'
             },
             Grocery_List : {
@@ -36,7 +37,7 @@ app.get('/', (req, res) => {
                 'Delete a grocery list': '/groceryListDelete/:groceryListId'
             },
             Meal_Plan : {
-                'Create meal plan for the week' : '',
+                'Create meal plan for the week' : '/mealplan/create/:userId/:startdate',
                 'Add meal to existing meal plan' : '',
                 'Discard old meal plan' : '',
                 'Remove meal from meal plan' : ''
@@ -113,6 +114,75 @@ app.get('/login/:user/:pass', (req, res) => {
     }
 });
 
+app.get('/recipesearch/:recipeName', async (req,res) => {
+    res.set('content-type', 'application/json');
+
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOON_KEY}&query=${req.params.recipeName}&number=10`
+
+    const searchResults = await fetch(url);
+    if(!searchResults.ok){
+        console.error("Error grabbing your search results, sorry :(");
+    }
+
+    parseResults = await searchResults.json();
+    res.send(parseResults);
+});
+
+app.get('/similarrecipes/:recipeId', async (req,res) => {
+    res.set('content-type', 'application/json');
+    
+    const url = `https://api.spoonacular.com/recipes/${req.params.recipeId}/similar?apiKey=${process.env.SPOON_KEY}&number=5`;
+    
+    const similar = await fetch(url);
+    if(!similar.ok){
+        console.error("Error getting similar results, sorry :(");
+    }
+    
+    similarParse = await similar.json();
+    res.send(similarParse);
+});
+
+app.get('/randomrecipe', async (req,res) => {
+    res.set('content-type', 'application/json');
+
+    const url = `https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOON_KEY}&number=9`
+
+    const results = await fetch(url);
+    if(!results.ok){
+        console.error("Eror getting your random recipes, weirdo >:[");
+    }
+
+    randomParse = await results.json();
+    res.send(randomParse);
+});
+
+app.get('/recipeinfo/:recipeId', async (req,res) => {
+    res.set('content-type', 'application/json');
+
+    const url = `https://api.spoonacular.com/recipes/${req.params.recipeId}/information?apiKey=${process.env.SPOON_KEY}&includeNutrition=true`
+
+    const results = await fetch(url);
+    if(!results.ok){
+        console.error("Eror getting your random recipes, weirdo >:[");
+    }
+
+    recipe = await results.json();
+    res.send(recipe);
+});
+
+app.get('/recipeinstructions/:recipeId', async (req,res) => {
+    res.set('content-type', 'application/json');
+    const url = `https://api.spoonacular.com/recipes/${req.params.recipeId}/analyzedInstructions?apiKey=${process.env.SPOON_KEY}`
+
+    const results = await fetch(url);
+    if(!results.ok){
+        console.error("Eror getting your random recipes, weirdo >:[");
+    }
+
+    recipe = await results.json();
+    res.send(recipe);
+});
+
 app.get('/isearch/:ingredients', async (req, res) => {
     res.set('content-type', 'application/json');
 
@@ -141,9 +211,9 @@ app.get('/searchingredient/:ingredientName', async (req, res) => {
 
     parseResults = await searchResults.json();
     res.send(parseResults);
-})
+});
 
-app.get('/groceryListCreate/:userId/:name', async (req,res) => {
+app.get('/groceryListCreate/:userId/:name', (req,res) => {
     res.set('content-type', 'application/json');
 
     listName = req.params.name.replace('/_/g', ' ')
@@ -161,7 +231,7 @@ app.get('/groceryListCreate/:userId/:name', async (req,res) => {
     fs.writeFileSync(groceryFilepath, JSON.stringify(parseData));
 
     res.send(newList);
-})
+});
 
 app.get('/groceryListAdd/:groceryListId/:ingredientID' , async (req, res) => {
     res.set('content-type', 'application/json');
@@ -194,9 +264,9 @@ app.get('/groceryListAdd/:groceryListId/:ingredientID' , async (req, res) => {
     fs.writeFileSync(groceryFilepath, JSON.stringify(parseData));
 
     res.send(editedList);
-})
+});
 
-app.delete('/groceryListDeleteItem/:groceryListId/:ingredientID', async (req, res) => {
+app.delete('/groceryListDeleteItem/:groceryListId/:ingredientID', (req, res) => {
     res.set('content-type', 'application/json');
 
     const filecontent = fs.readFileSync(groceryFilepath, { encoding: 'utf-8' });
@@ -221,7 +291,7 @@ app.delete('/groceryListDeleteItem/:groceryListId/:ingredientID', async (req, re
     });
 });
 
-app.delete('/groceryListDelete/:groceryListId', async (req, res) => {
+app.delete('/groceryListDelete/:groceryListId', (req, res) => {
     res.set('content-type', 'application/json');
 
     const filecontent = fs.readFileSync(groceryFilepath, { encoding: 'utf-8' });
@@ -238,6 +308,23 @@ app.delete('/groceryListDelete/:groceryListId', async (req, res) => {
     });
 });
 
+app.get('/mealplan/create/:userId/:startdate', (req,res) => {
+    res.set('content-type','application/json');
+
+    const filecontent = fs.readFileSync(mealPlanFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+
+    const plan = {
+        meals : [],
+        user : parseInt(req.params.userId),
+        start : req.params.startdate,
+        id : parseData.plans[parseData.plans.length - 1].id - 1
+    }
+
+    parseData.plans.push(plan)
+    fs.writeFileSync(mealPlanFilepath, JSON.stringify(parseData));
+    res.send([plan]);
+});
 
 app.listen(port, () => {
     console.log(`Running on port ${port} access at http://localhost:${port}/`)
