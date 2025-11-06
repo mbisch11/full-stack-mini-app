@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="./style.css" />
+  <title>Grocery Lists</title>
+</head>
+<body id="dashBody">
+
+  <header id="header">
+    <div id="logoSide">
+      <h1 id="title">Grocery Lists</h1>
+    </div>
+    <div id="buttonBack">
+      <a href="dashboard.html"><button id="buttonBack">Back to Dashboard</button></a>
+    </div>
+  </header>
+
+
+  <main id="content">
+    <h2>Create your grocery list</h2>
+
+    <div class="card">
+      <p>Add an item and see it below.</p>
+      <div class="row">
+        <input type="text" id="itemInput" class="input" placeholder="Enter an item">
+        <button id="addItemBtn">Add Item</button>
+      </div>
+      <ul id="itemList" class="list"></ul>
+    </div>
+  </main>
+
+  <script>
+    const itemInput = document.getElementById("itemInput");
+    const addItemBtn = document.getElementById("addItemBtn");
+    const itemList  = document.getElementById("itemList");
+
+    addItemBtn.addEventListener("click", () => {
+      const v = itemInput.value.trim();
+      if (!v) return alert("Please enter an item!");
+      const li = document.createElement("li");
+      li.textContent = v;
+      itemList.appendChild(li);
+      itemInput.value = "";
+    });
+  </script>
+</body>
+</html>

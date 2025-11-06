@@ -205,3 +205,33 @@ button {
 /*User Profile Start*/
 
 /*User Profile End*/
+
+
+
+
+
+/* Meal Planning Styling */
+#content { flex: 1; padding: 16px; }
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.input { padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; }
+.list { list-style: none; padding: 0; margin: 12px 0 0; }
+.list li { background: #f5f6fa; margin: 6px 0; padding: 10px 12px; border-radius: 8px; }
+
+#buttonBack {
+  padding: 10px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #050573;
+  color: white;
+  cursor: pointer;
+}
