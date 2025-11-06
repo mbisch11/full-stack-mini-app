@@ -1,5 +1,1 @@
-{
-    "plans": [
-
-    ]
-}
+{"plans":[{"meals":[{"id":716429,"name":"Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs","image":"https://img.spoonacular.com/recipes/716429-556x370.jpg","servings":2,"date":"2025-11-06"}],"user":0,"start":"2025-11-06","id":0},{"meals":[],"user":2,"start":"2025-11-03","id":1},{"meals":[],"user":2,"start":"2025-11-03","id":2}]}
