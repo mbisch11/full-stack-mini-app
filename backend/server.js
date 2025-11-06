@@ -16,12 +16,36 @@ app.get('/', (req, res) => {
     res.set('content-type', 'application/json');
     const response = {
         commands: {
-            'Signup': '/signup/:user/:pass',
-            'Login': '/login/:user/:pass',
-            'Search by ingredient': '/isearch/:ingredients',
-            'Search for ingredient': '/searchingredient/:ingredientName',
-            'Create grocery list' : '/groceryListCreate/:userId/:name',
-            'Add item to grocery list' : '/groceryListAdd/:groceryListId/:ingredientID'
+            Credential : {
+                'Signup': '/signup/:user/:pass',
+                'Login': '/login/:user/:pass'
+            },
+            Search_API : {
+                'Search for recipe by ingredient': '/isearch/:ingredients',
+                'Search for recipe by name': '',
+                'Get similar recipes': '',
+                'Get random recipes': '',
+                'Get ingredients by recipe id' : '',
+                'Get nutrition by recipe id': '',
+                'Search for ingredient by name': '/searchingredient/:ingredientName'
+            },
+            Grocery_List : {
+                'Create grocery list' : '/groceryListCreate/:userId/:name',
+                'Add item to grocery list' : '/groceryListAdd/:groceryListId/:ingredientID',
+                'Delete an item from grocery list' : '/groceryListDeleteItem/:groceryListId/:ingredientID',
+                'Delete a grocery list': '/groceryListDelete/:groceryListId'
+            },
+            Meal_Plan : {
+                'Create meal plan for the week' : '',
+                'Add meal to existing meal plan' : '',
+                'Discard old meal plan' : '',
+                'Remove meal from meal plan' : ''
+            },
+            User_Info : {
+                'Add to meal plan count' : '',
+                'Add to grocery count' : '',
+                'Add to recipes cooked' : ''
+            }
         }
     }
     res.send(response);
