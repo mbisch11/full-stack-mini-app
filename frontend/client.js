@@ -6,6 +6,21 @@ function navSignup(){
     window.location.assign("signup.html");
 }
 
+function navUser(){
+    window.location.assign("user.html");
+}
+
+function navDashboard(){
+    window.location.assign("dashboard.html");
+}
+
+window.onload = function(){
+    user = JSON.parse(sessionStorage.getItem("userSession"));
+    console.log(user);
+
+    document.querySelector("#userName").textContent = user.username;
+};
+
 async function loginUser(){
     event.preventDefault();
     const username = document.querySelector("#usernameLogForm").value;
@@ -21,7 +36,7 @@ async function loginUser(){
         if(parseRes.id < 0){
             console.error("Incorrect Login information")
         }else{
-            sessionStorage.setItem("userSession", parseRes);
+            sessionStorage.setItem("userSession", JSON.stringify(parseRes));
             window.location.assign("dashboard.html")
         }
     } catch (e) {

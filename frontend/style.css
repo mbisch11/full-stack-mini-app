@@ -33,6 +33,10 @@ body{
     scale: calc(1.05);
     cursor: pointer;
 }
+#headerIcon:active{
+    scale: calc(0.95);
+    cursor: crosshair;
+}
 /*Constants end*/
 
 /*Homepage Start*/
@@ -60,17 +64,6 @@ body{
     align-items: center;
     gap: 10%;
 }
-
-button {
-      width: 150px;       
-      height: 40px;              
-      font-size: 18px;           
-      border: none;
-      border-radius: 10px;
-      background-color: #065c72;
-      color: white;
-      cursor: pointer;
-    }
 
 #headerBttn{
     box-shadow: 0px 1.5px 2px rgba(0, 0, 0, 0.3);
@@ -173,16 +166,31 @@ button {
     flex-direction: column;
     align-items: center;
     justify-items: center;
+    gap: 5%;
 }
-#sidebarText{
+#sidebarBttn{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: large;
     margin-top: 0px;
     transition: all;
     transition-duration: 150ms;
+    background-color: #065c72;
+    border-width: 0px;
+    border-radius: 10px;
+    color: white;
+    width: 75%;
+    padding: 8px 8px;
 }
-#sidebarText:hover{
+#sidebarBttn:hover{
     scale: calc(1.05);
     cursor: pointer;
 }
+#sidebarBttn:active{
+    scale: calc(0.95);
+    cursor: crosshair;
+}
 /*Dashboard End*/
+
+/*User Profile Start*/
+
+/*User Profile End*/

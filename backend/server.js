@@ -7,7 +7,10 @@ const port = 3000;
 
 app.use(cors());
 
-const filepath = "../users.json"
+const userFilepath = "./storage/users.json"
+const userInfoFilepath = "./storage/userInfo.json"
+const groceryFilepath = "./storage/groceryLists.json"
+const mealPlanFilepath = "./storage/mealPlanning.json"
 
 app.get('/', (req, res) => {
     res.set('content-type', 'application/json');
@@ -15,7 +18,10 @@ app.get('/', (req, res) => {
         commands: {
             'Signup': '/signup/:user/:pass',
             'Login': '/login/:user/:pass',
-            'Search by ingredient': 'isearch/:ingredients'
+            'Search by ingredient': '/isearch/:ingredients',
+            'Search for ingredient': '/searchingredient/:ingredientName',
+            'Create grocery list' : '/groceryListCreate/:userId/:name',
+            'Add item to grocery list' : '/groceryListAdd/:groceryListId/:ingredientID'
         }
     }
     res.send(response);
@@ -28,7 +34,7 @@ app.get('/signup/:user/:pass', (req, res) => {
     const paramUsername = req.params.user;
     const paramPassword = req.params.pass;
     
-    const filecontent = fs.readFileSync(filepath, {encoding: "utf-8"});
+    const filecontent = fs.readFileSync(userFilepath, {encoding: "utf-8"});
     const parseData = JSON.parse(filecontent);
 
     parseData.users.forEach(person => {
@@ -43,7 +49,7 @@ app.get('/signup/:user/:pass', (req, res) => {
             password: paramPassword,
             id: parseData.users[parseData.users.length - 1].id + 1
         });
-        fs.writeFileSync(filepath, JSON.stringify(parseData));
+        fs.writeFileSync(userFilepath, JSON.stringify(parseData));
         res.send(parseData.users[parseData.users.length - 1]);
     }else{
         res.send({
@@ -62,7 +68,7 @@ app.get('/login/:user/:pass', (req, res) => {
     const paramUsername = req.params.user;
     const paramPassword = req.params.pass;
 
-    const filecontent = fs.readFileSync(filepath, {encoding: "utf-8"});
+    const filecontent = fs.readFileSync(userFilepath, {encoding: "utf-8"});
     const parseData = JSON.parse(filecontent);
 
     parseData.users.forEach(person => {
@@ -112,6 +118,102 @@ app.get('/searchingredient/:ingredientName', async (req, res) => {
     parseResults = await searchResults.json();
     res.send(parseResults);
 })
+
+app.get('/groceryListCreate/:userId/:name', async (req,res) => {
+    res.set('content-type', 'application/json');
+
+    listName = req.params.name.replace('/_/g', ' ')
+
+    const filecontent = fs.readFileSync(groceryFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+
+    const newList = {
+        "name" : listName,
+        "userId": parseInt(req.params.userId),
+        "id" : parseData.lists[parseData.lists.length - 1].id + 1 || 0,
+        "items" : []
+    }
+    parseData.lists.push(newList);
+    fs.writeFileSync(groceryFilepath, JSON.stringify(parseData));
+
+    res.send(newList);
+})
+
+app.get('/groceryListAdd/:groceryListId/:ingredientID' , async (req, res) => {
+    res.set('content-type', 'application/json');
+    
+    const url = `https://api.spoonacular.com/food/ingredients/${req.params.ingredientID}/information?apiKey=${process.env.SPOON_KEY}&amount=1`
+    const ingredient = await fetch(url)
+    if(!ingredient.ok){
+        Console.error("Invalid ingredient sorry :(");
+    }
+
+    const parseIngredient = await ingredient.json();
+    
+    const newIngredient = {
+        "id" : parseInt(parseIngredient.id),
+        "name" : parseIngredient.name,
+        "image" : `https://spoonacular.com/cdn/ingredients_250x250/${parseIngredient.image}`,
+        "aisle" : parseIngredient.aisle
+    }
+
+    const filecontent = fs.readFileSync(groceryFilepath, {encoding: "utf-8"});
+    const parseData = JSON.parse(filecontent);
+
+    let editedList = null;
+    parseData.lists.forEach(list => {
+        if(list.id == req.params.groceryListId){
+            list.items.push(newIngredient);
+            editedList = list;
+        }
+    })
+    fs.writeFileSync(groceryFilepath, JSON.stringify(parseData));
+
+    res.send(editedList);
+})
+
+app.delete('/groceryListDeleteItem/:groceryListId/:ingredientID', async (req, res) => {
+    res.set('content-type', 'application/json');
+
+    const filecontent = fs.readFileSync(groceryFilepath, { encoding: 'utf-8' });
+    const data = JSON.parse(filecontent);
+
+    const groceryListId = parseInt(req.params.groceryListId);
+    const ingredientID = parseInt(req.params.ingredientID);
+
+    let newList = null
+
+    data.lists.forEach(list => {
+        if(list.id == groceryListId){
+            list.items = list.items.filter(item => item.id != ingredientID);
+            newList = list.items;
+        }
+    })
+
+    fs.writeFileSync(groceryFilepath, JSON.stringify(data));
+    res.send({
+      message: `Ingredient ${ingredientID} removed successfully.`,
+      updatedList: newList,
+    });
+});
+
+app.delete('/groceryListDelete/:groceryListId', async (req, res) => {
+    res.set('content-type', 'application/json');
+
+    const filecontent = fs.readFileSync(groceryFilepath, { encoding: 'utf-8' });
+    const data = JSON.parse(filecontent);
+
+    const groceryListId = parseInt(req.params.groceryListId);
+
+    data.lists = data.lists.filter(list => list.id != groceryListId);
+
+    fs.writeFileSync(groceryFilepath, JSON.stringify(data));
+    res.send({
+        status: 200,
+        message: `Grocery List ${groceryListId} removed successfully.`,
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`Running on port ${port} access at http://localhost:${port}/`)
