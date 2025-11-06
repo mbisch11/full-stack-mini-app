@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="./style.css" />
   <title>Meal Planning</title>
 </head>
-<body>
-  <h1>Meal Planning</h1>
-  <p>This page will show and organize meal plans.</p>
+<body id="dashBody">
 
-  <a href="dashboard.html"><button>Back to Main Menu</button></a>
+  <header id="header">
+    <div id="logoSide">
+      <h1 id="title">Meal Planning</h1>
+    </div>
+    <div id="buttonBack">
+      <a href="dashboard.html"><button id="buttonBack">Back to Dashboard</button></a>
+    </div>
+  </header>
+
+
+    <main id="content">
+      <h2>Plan your meals</h2>
+
+      <div class="card">
+        <p>Add a meal and see it below.</p>
+        <div class="row">
+          <input type="text" id="mealInput" class="input" placeholder="Enter a meal">
+          <button id="addMealBtn">Add Meal</button>
+        </div>
+        <ul id="mealList" class="list"></ul>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // need to hook up to backend
+    const mealInput = document.getElementById("mealInput");
+    const addMealBtn = document.getElementById("addMealBtn");
+    const mealList  = document.getElementById("mealList");
+    addMealBtn.addEventListener("click", () => {
+      const v = mealInput.value.trim();
+      if (!v) return alert("Please enter a meal!");
+      const li = document.createElement("li");
+      li.textContent = v;
+      mealList.appendChild(li);
+      mealInput.value = "";
+    });
+  </script>
 </body>
 </html>

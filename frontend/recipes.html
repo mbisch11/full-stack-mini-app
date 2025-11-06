@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="./style.css" />
+  <title>Recipes</title>
+</head>
+<body id="dashBody">
+
+  <header id="header">
+    <div id="logoSide">
+      <h1 id="title">Recipes</h1>
+    </div>
+    <div id="buttonBack">
+      <a href="dashboard.html"><button id="buttonBack">Back to Dashboard</button></a>
+    </div>
+  </header>
+
+  <main id="content">
+    <h2>Save your favorite recipes</h2>
+
+    <div class="card">
+      <p>Add a recipe title and see it appear below.</p>
+
+      <div class="row">
+        <input type="text" id="recipeInput" class="input" placeholder="Enter a recipe">
+        <button id="addRecipeBtn">Add Recipe</button>
+      </div>
+
+      <ul id="recipeList" class="list"></ul>
+    </div>
+  </main>
+
+  <script>
+    // need to hook up to backend
+    
+    const recipeInput = document.getElementById("recipeInput");
+    const addRecipeBtn = document.getElementById("addRecipeBtn");
+    const recipeList  = document.getElementById("recipeList");
+
+    addRecipeBtn.addEventListener("click", () => {
+      const value = recipeInput.value.trim();
+      if (!value) return alert("Please enter a recipe!");
+      const li = document.createElement("li");
+      li.textContent = value;
+      recipeList.appendChild(li);
+      recipeInput.value = "";
+    });
+  </script>
+</body>
+</html>
