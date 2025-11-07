@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8"></meta>
         <link rel="stylesheet" type="text/css" href="./style.css"></link>
-        <script src="./client.js" defer></script>
+        <script src="./user.js" defer></script>
     </head>
     <body>
         <div id="header">
@@ -17,15 +17,20 @@
         </div>
         <div id="dashBody">
             <div id="userCard">
-                <p id="userName"></p>
+                <h2>User Profile</h2>
+                <p><strong>Username:</strong> <span id="userName"></span></p>
+                <p><strong>User ID:</strong> <span id="userId"></span></p>
+                
+                <div style="margin-top: 24px;">
+                    <h3>Your Stats</h3>
+                    <p>Grocery Lists Created: <span id="groceryCount">0</span></p>
+                    <p>Meal Plans Created: <span id="mealPlanCount">0</span></p>
+                    <p>Recipes Cooked: <span id="recipesCooked">0</span></p>
+                    <p>Saved Recipes: <span id="savedRecipesCount">0</span></p>
+                </div>
+                
+                <button onclick="logout()" style="margin-top: 24px; background-color: #dc2626;">Logout</button>
             </div>
-            <div id="dashBody">
-            <div id="sidebar">
-                <button id="sidebarBttn">Meal Planning</button>
-                <button id="sidebarBttn">Grocery Lists</button>
-                <button id="sidebarBttn">Recipes</button>
-            </div>
-        </div>
         </div>
         <div id="footer">
             <div id="leftFoot">

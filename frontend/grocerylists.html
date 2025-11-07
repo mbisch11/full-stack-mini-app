@@ -4,13 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="./style.css" />
+  <script src="./grocerylists.js" defer></script>
   <title>Grocery Lists</title>
 </head>
 <body id="dashBody">
 
   <header id="header">
     <div id="logoSide">
-      <h1 id="title">Grocery Lists</h1>
+      <img id="logo" src="./assets/fork-knife.png"/>
+      <h3 id="title">Grocery Lists</h3>
     </div>
     <div id="buttonBack">
       <a href="dashboard.html"><button id="buttonBack">Back to Dashboard</button></a>
@@ -19,31 +21,23 @@
 
 
   <main id="content">
-    <h2>Create your grocery list</h2>
+    <h2>Create Your Grocery List</h2>
 
     <div class="card">
       <p>Add an item and see it below.</p>
       <div class="row">
-        <input type="text" id="itemInput" class="input" placeholder="Enter an item">
-        <button id="addItemBtn">Add Item</button>
+        <input type="text" id="itemInput" class="input" placeholder="Search for an ingredient">
+        <button onclick="searchIngredients()">Search</button>
       </div>
+      <div id="searchResultsSection" style="margin-top: 20px; display: none;">
+        <h3>Search Results</h3>
+        <ul id="searchResults" class="list"></ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top: 20px;">
+      <h3>Your Grocery List</h3>
       <ul id="itemList" class="list"></ul>
     </div>
   </main>
-
-  <script>
-    const itemInput = document.getElementById("itemInput");
-    const addItemBtn = document.getElementById("addItemBtn");
-    const itemList  = document.getElementById("itemList");
-
-    addItemBtn.addEventListener("click", () => {
-      const v = itemInput.value.trim();
-      if (!v) return alert("Please enter an item!");
-      const li = document.createElement("li");
-      li.textContent = v;
-      itemList.appendChild(li);
-      itemInput.value = "";
-    });
-  </script>
 </body>
 </html>

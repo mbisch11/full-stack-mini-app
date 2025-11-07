@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="./style.css" />
   <title>Meal Planning</title>
+  <script src="./mealplanning.js" defer></script>
 </head>
 <body id="dashBody">
 
   <header id="header">
     <div id="logoSide">
-      <h1 id="title">Meal Planning</h1>
+      <img id="logo" src="./assets/fork-knife.png"/>
+      <h3 id="title">Meal Planning</h3>
     </div>
     <div id="buttonBack">
       <a href="dashboard.html"><button id="buttonBack">Back to Dashboard</button></a>
@@ -19,32 +21,31 @@
 
 
     <main id="content">
-      <h2>Plan your meals</h2>
-
+      <h2>Plan Your Meals</h2>
       <div class="card">
-        <p>Add a meal and see it below.</p>
-        <div class="row">
-          <input type="text" id="mealInput" class="input" placeholder="Enter a meal">
-          <button id="addMealBtn">Add Meal</button>
+        <h3>Search for Recipes</h3>
+        <p>Add a meal to your meal plan and see it below.</p>
+        <div class="search-type-selector">
+          <label>
+            <input type="radio" name="searchType" value="name" checked onchange="updateSearchPlaceholder()">
+            Search by Name
+          </label>
+          <label>
+            <input type="radio" name="searchType" value="ingredients" onchange="updateSearchPlaceholder()">
+            Search by Ingredients
+          </label>
         </div>
+        <div class="row">
+          <input type="text" id="searchInput" class="input" placeholder="Enter a recipe name">
+          <button onclick="searchRecipes()">Search</button>
+        </div>
+        <ul id="searchResults" class="list"></ul>
+      </div>
+      <div class="card">
+        <h3>Your Meal Plan</h3>
         <ul id="mealList" class="list"></ul>
       </div>
     </main>
   </div>
-
-  <script>
-    // need to hook up to backend
-    const mealInput = document.getElementById("mealInput");
-    const addMealBtn = document.getElementById("addMealBtn");
-    const mealList  = document.getElementById("mealList");
-    addMealBtn.addEventListener("click", () => {
-      const v = mealInput.value.trim();
-      if (!v) return alert("Please enter a meal!");
-      const li = document.createElement("li");
-      li.textContent = v;
-      mealList.appendChild(li);
-      mealInput.value = "";
-    });
-  </script>
 </body>
 </html>
