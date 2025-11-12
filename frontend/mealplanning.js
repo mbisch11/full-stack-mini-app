@@ -7,7 +7,7 @@ function getCurrentUser() {
 
 let currentMealPlan = null
 let searchResults = []
-let allMealPlans = []
+const allMealPlans = []
 
 window.onload = async () => {
     const user = getCurrentUser()
@@ -16,46 +16,41 @@ window.onload = async () => {
         return
     }
 
-    await loadUserMealPlans()
-    }
-
-async function loadUserMealPlans() {
-    const user = getCurrentUser()
-
-    try {
-        const res = await fetch(`${API_BASE_URL}/mealplan/getall/${user.id}`)
-        if (!res.ok) {
-            await loadOrCreateMealPlan()
-            return
-        }
-
-        const plans = await res.json()
-        allMealPlans = plans.filter((plan) => plan.user === user.id)
-
-        if (allMealPlans.length > 0) {
-            currentMealPlan = allMealPlans[allMealPlans.length - 1]
-            displayMealPlan()
-        } else {
-            await loadOrCreateMealPlan()
-        }
-    } catch (e) {
-        console.error(e)
-        await loadOrCreateMealPlan()
-    }
-
     await loadOrCreateMealPlan()
 }
 
 async function loadOrCreateMealPlan() {
     const user = getCurrentUser()
 
+    try {
+        // Check if user already has a meal plan (backend will check date)
+        const res = await fetch(`${API_BASE_URL}/mealplan/getbyuser/${user.id}`)
+        if (!res.ok) throw new Error("Failed to fetch meal plan")
+
+        const existingPlan = await res.json()
+
+        if (existingPlan && existingPlan.id !== -1) {
+        // User already has a plan (backend already checked/updated date)
+        currentMealPlan = existingPlan
+        displayMealPlan()
+        } else {
+        // No existing plan, create a new one
+        await createMealPlan()
+        }
+    } catch (e) {
+        console.error(e)
+        // If there's an error, try creating a new plan
+        await createMealPlan()
+    }
+}
+
+async function createMealPlan() {
+    const user = getCurrentUser()
     const today = new Date().toISOString().split("T")[0]
 
     try {
         const res = await fetch(`${API_BASE_URL}/mealplan/create/${user.id}/${today}`)
-        if (!res.ok){
-            throw new Error("Failed to create meal plan")
-        }
+        if (!res.ok) throw new Error("Failed to create meal plan")
 
         const data = await res.json()
         currentMealPlan = data[0]
@@ -89,20 +84,20 @@ async function searchRecipes() {
     try {
         let res
         if (searchType === "name") {
-            res = await fetch(`${API_BASE_URL}/recipesearch/${encodeURIComponent(query)}`)
+        res = await fetch(`${API_BASE_URL}/recipesearch/${encodeURIComponent(query)}`)
         } else {
-            const ingredients = query.replace(/,\s*/g, ",")
-            res = await fetch(`${API_BASE_URL}/isearch/${encodeURIComponent(ingredients)}`)
+        const ingredients = query.replace(/,\s*/g, ",")
+        res = await fetch(`${API_BASE_URL}/isearch/${encodeURIComponent(ingredients)}`)
         }
-        if (!res.ok){
-            throw new Error("Failed to search recipes")
+        if (!res.ok) {
+        throw new Error("Failed to search recipes")
         }
 
         const data = await res.json()
         if (searchType === "name") {
-            searchResults = data.results || []
+        searchResults = data.results || []
         } else {
-            searchResults = data || []
+        searchResults = data || []
         }
 
         displaySearchResults()
@@ -128,16 +123,16 @@ function displaySearchResults() {
         const recipeId = recipe.id
 
         li.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <img src="${recipeImage}" alt="${recipeTitle}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
-                <div style="flex: 1;">
-                <strong>${recipeTitle}</strong>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${recipeImage}" alt="${recipeTitle}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+                    <div style="flex: 1;">
+                    <strong>${recipeTitle}</strong>
+                    </div>
+                    <button onclick="addMealToPlan(${recipeId})" style="padding: 6px 12px; background-color: #050573;">
+                    Add to Plan
+                    </button>
                 </div>
-                <button onclick="addMealToPlan(${recipeId})" style="padding: 6px 12px; background-color: #050573;">
-                Add to Plan
-                </button>
-            </div>
-            `
+                `
         list.appendChild(li)
     })
 }
@@ -147,8 +142,8 @@ async function addMealToPlan(recipeId) {
 
     try {
         const addRes = await fetch(`${API_BASE_URL}/mealplan/addmeal/${recipeId}/${date}/${currentMealPlan.id}`)
-        if (!addRes.ok){
-            throw new Error("Failed to add meal")
+        if (!addRes.ok) {
+        throw new Error("Failed to add meal")
         }
         const meal = await addRes.json()
         currentMealPlan.meals.push(meal)
@@ -173,19 +168,19 @@ function displayMealPlan() {
     currentMealPlan.meals.forEach((meal) => {
         const li = document.createElement("li")
         li.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <img src="${meal.image}" alt="${meal.name}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
-                <div style="flex: 1;">
-                    <strong>${meal.name}</strong>
-                    <div style="font-size: 0.875rem; color: #666;">
-                        ${meal.servings} servings • ${meal.date}
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${meal.image}" alt="${meal.name}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+                    <div style="flex: 1;">
+                        <strong>${meal.name}</strong>
+                        <div style="font-size: 0.875rem; color: #666;">
+                            ${meal.servings} servings • ${meal.date}
+                        </div>
                     </div>
+                    <button onclick="removeMeal(${meal.id})" style="padding: 6px 12px; background-color: #dc2626;">
+                        Remove
+                    </button>
                 </div>
-                <button onclick="removeMeal(${meal.id})" style="padding: 6px 12px; background-color: #dc2626;">
-                    Remove
-                </button>
-            </div>
-        `
+            `
         list.appendChild(li)
     })
 }
