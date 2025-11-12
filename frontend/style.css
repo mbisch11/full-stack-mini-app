@@ -1,298 +1,412 @@
 /*Constants Start*/
-body{
-    margin: 0px;
+body {
+  margin: 0px;
 }
-#footer{
-    background-color: rgb(249, 211, 146);
-    display: flex;
-    flex-direction: row;
+#footer {
+  background-color: rgb(249, 211, 146);
+  display: flex;
+  flex-direction: row;
 }
-#leftFoot{
-    width: 50%;
+#leftFoot {
+  width: 50%;
 }
-#rightFoot{
-    width: 50%;
+#rightFoot {
+  width: 50%;
 }
-#header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: bisque;
-    height: 70px;
-    padding: 8px 20px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
-    position: sticky;
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: bisque;
+  height: 70px;
+  padding: 8px 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
+  position: sticky;
 }
-#headerIcon{
-    aspect-ratio: 1/1;
-    height: 30%;
-    transition: all;
-    transition-duration: 150ms;
+#headerIcon {
+  aspect-ratio: 1 / 1;
+  height: 30%;
+  transition: all;
+  transition-duration: 150ms;
 }
-#headerIcon:hover{
-    scale: calc(1.05);
-    cursor: pointer;
+#headerIcon:hover {
+  scale: calc(1.05);
+  cursor: pointer;
 }
-#headerIcon:active{
-    scale: calc(0.95);
-    cursor: crosshair;
+#headerIcon:active {
+  scale: calc(0.95);
+  cursor: crosshair;
 }
 /*Constants end*/
 
 /*Homepage Start*/
-#logoSide{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 4%;
+#logoSide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4%;
 }
 #title {
-    font-size: xx-large;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: xx-large;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 #logo {
-    height: 40px;
-    width: 40px;
+  height: 40px;
+  width: 40px;
 }
 #buttonSide {
-    display: flex;
-    flex-direction: row;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 5%;
-    margin-left: auto;
-    align-items: center;
-    gap: 10%;
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 5%;
+  margin-left: auto;
+  align-items: center;
+  gap: 10%;
 }
 
 button {
-    width: 150px;
-    height: 40px;
-    font-size: 14px;
-    border: none;
-    border-radius: 10px;
-    background-color: #050573;
-    color: white;
-    cursor: pointer;
+  width: 150px;
+  height: 40px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #050573;
+  color: white;
+  cursor: pointer;
 }
 
 #headerBttn {
-    box-shadow: 0px 1.5px 2px rgba(0, 0, 0, 0.3);
-    background-color: darkgrey;
-    color: whitesmoke;
-    font-size: large;
-    transition: all;
-    transition-duration: 150ms;
-    border-radius: 15px;
-    border-width: 1.5px;
-    border-color: whitesmoke;
-    padding: 5% 10%;
-    text-align: center;
-    align-items: center;
+  box-shadow: 0px 1.5px 2px rgba(0, 0, 0, 0.3);
+  background-color: darkgrey;
+  color: whitesmoke;
+  font-size: large;
+  transition: all;
+  transition-duration: 150ms;
+  border-radius: 15px;
+  border-width: 1.5px;
+  border-color: whitesmoke;
+  padding: 5% 10%;
+  text-align: center;
+  align-items: center;
 }
 #headerBttn:hover {
-    scale: calc(1.05);
+  scale: calc(1.05);
 }
 #headerBttn:active {
-    scale: calc(0.975);
+  scale: calc(0.975);
 }
 
 #body {
-    background-image: url("./assets/homepage-bg.jpg");
-    background-size: cover;
-    margin: 0px;
-    height: 100vh;
+  background-image: url("./assets/homepage-bg.jpg");
+  background-size: cover;
+  margin: 0px;
+  height: 100vh;
 }
 #titleSection {
-    background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    width: 40vw;
-    height: 100%;
-    display: grid;
-    align-items: center;
-    padding-left: 16px;
-    padding-right: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  width: 40vw;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 #titleText {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 600;
-    font-size: xx-large;
-    margin-top: 0px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: xx-large;
+  margin-top: 0px;
 }
 #secondText {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 /*Homepage end*/
 
 /*Login Start*/
 #logBody {
-    height: 100vh;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    background-color: lightgray;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgray;
 }
 #loginForm {
-    display: flex;
-    flex-direction: column;
-    background-color: antiquewhite;
-    border-radius: 25px;
-    width: fit-content;
-    padding: 16px;
-    gap: 8px;
-    margin: auto auto;
+  display: flex;
+  flex-direction: column;
+  background-color: antiquewhite;
+  border-radius: 25px;
+  width: fit-content;
+  padding: 16px;
+  gap: 8px;
+  margin: auto auto;
 }
 /*Login End*/
 
 /*Sign Up Start*/
 #signupBody {
-    height: 100vh;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    background-color: lightgray;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgray;
 }
 #signupForm {
-    display: flex;
-    flex-direction: column;
-    background-color: antiquewhite;
-    border-radius: 25px;
-    width: fit-content;
-    padding: 16px;
-    gap: 8px;
-    margin: auto auto;
+  display: flex;
+  flex-direction: column;
+  background-color: antiquewhite;
+  border-radius: 25px;
+  width: fit-content;
+  padding: 16px;
+  gap: 8px;
+  margin: auto auto;
 }
 /*Sign Up End*/
 
 /*Dashboard Start*/
 #dashBody {
-    background-color: lightgray;
-    width: 100%;
-    height: 100vh;
-    display: flex;
+  background-color: lightgray;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 #sidebar {
-    height: 100%;
-    position: sticky;
-    background-color: antiquewhite;
-    width: 12.5%;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    gap: 5%;
+  height: 100%;
+  position: sticky;
+  background-color: antiquewhite;
+  width: 12.5%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  gap: 5%;
 }
 #sidebarBttn {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: large;
-    margin-top: 0px;
-    transition: all;
-    transition-duration: 150ms;
-    background-color: #065c72;
-    border-width: 0px;
-    border-radius: 10px;
-    color: white;
-    width: 75%;
-    padding: 8px 8px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: large;
+  margin-top: 0px;
+  transition: all;
+  transition-duration: 150ms;
+  background-color: #065c72;
+  border-width: 0px;
+  border-radius: 10px;
+  color: white;
+  width: 75%;
+  padding: 8px 8px;
 }
 #sidebarBttn:hover {
-    scale: calc(1.05);
-    cursor: pointer;
+  scale: calc(1.05);
+  cursor: pointer;
 }
 #sidebarBttn:active {
-    scale: calc(0.95);
-    cursor: crosshair;
+  scale: calc(0.95);
+  cursor: crosshair;
 }
 /*Dashboard End*/
 
 /*User Profile Start*/
 #userCard {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding: 24px;
-    margin: auto auto;
-    max-width: 600px;
-    width: 65%;
-    height: fit-content;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  margin: auto auto;
+  max-width: 600px;
+  width: 65%;
+  height: fit-content;
 }
 
 #userCard h2 {
-    margin-top: 0;
-    color: #050573;
+  margin-top: 0;
+  color: #050573;
 }
 
 #userCard h3 {
-    color: #065c72;
-    margin-bottom: 12px;
+  color: #065c72;
+  margin-bottom: 12px;
 }
 
 #userCard p {
-    margin: 8px 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 8px 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 /*User Profile End*/
 
+/* Added styles for recipe detail page */
+#recipeDetailCard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  margin: 24px auto;
+  max-width: 900px;
+  width: 90%;
+  height: fit-content;
+}
+
+#recipeHeader {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+#recipeImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+#recipeHeaderInfo {
+  flex: 1;
+  min-width: 250px;
+}
+
+#recipeHeaderInfo h1 {
+  margin-top: 0;
+  color: #050573;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#recipeMetadata p {
+  margin: 8px 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+}
+
+#recipeSection {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+#recipeSection h2 {
+  color: #065c72;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 16px;
+}
+
+#recipeSummary {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+#ingredientsList {
+  list-style: disc;
+  padding-left: 24px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#ingredientsList li {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+#instructionsList {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+#instructionsList ol {
+  padding-left: 24px;
+}
+
+#instructionsList ol li {
+  margin: 12px 0;
+}
+
+#recipeDiets {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+#recipeDiets h3 {
+  color: #065c72;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 12px;
+}
+
+#dietsContainer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dietBadge {
+  background-color: #f0f0f0;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #065c72;
+  border: 1px solid #d0d0d0;
+}
+
 /* Meal Planning Styling */
 #content {
-    padding: 16px;
-    background-color: lightgray;
-    width: 100%;
+  padding: 16px;
+  background-color: lightgray;
+  width: 100%;
 }
 
 .card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    padding: 16px;
-    margin-top: 12px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  margin-top: 12px;
 }
 
 .search-type-selector {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .search-type-selector label {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    flex: 1;
-    min-width: 200px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 200px;
 }
 .input {
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
 }
 .list {
-    list-style: none;
-    padding: 0;
-    margin: 12px 0 0;
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
 }
 .list li {
-    background: #f5f6fa;
-    margin: 6px 0;
-    padding: 10px 12px;
-    border-radius: 8px;
+  background: #f5f6fa;
+  margin: 6px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
 }
 
 #buttonBack {
-    padding: 8px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    background-color: #050573;
-    color: white;
-    cursor: pointer;
+  padding: 8px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #050573;
+  color: white;
+  cursor: pointer;
 }

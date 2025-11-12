@@ -71,7 +71,7 @@ function displaySearchResults() {
     searchResults.forEach((recipe) => {
         const li = document.createElement("li")
         li.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="viewRecipe(${recipe.id})">
                     <img src="${recipe.image}" alt="${recipe.title}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
                     <div style="flex: 1;">
                         <strong>${recipe.title}</strong>
@@ -94,7 +94,7 @@ function displaySavedRecipes() {
     savedRecipes.forEach((recipe) => {
         const li = document.createElement("li")
         li.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="viewRecipe(${recipe.id})">
                     <img src="${recipe.image}" alt="${recipe.name}" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
                     <div style="flex: 1;">
                         <strong>${recipe.name}</strong>
@@ -106,6 +106,10 @@ function displaySavedRecipes() {
             `
         list.appendChild(li)
     })
+}
+
+function viewRecipe(recipeId) {
+  window.location.assign(`recipe-detail.html?id=${recipeId}`)
 }
 
 async function saveRecipe(recipeId, recipeName, recipeImage) {

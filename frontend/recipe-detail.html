@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./recipe-detail.js" defer></script>
+  <title>Recipe Details</title>
+</head>
+<body>
+    <header id="header">
+        <div id="logoSide">
+            <h1 id="title">Recipes</h1>
+        </div>
+        <div id="buttonBack">
+            <a href="dashboard.html"><button id="buttonBack">Back to Dashboard</button></a>
+        </div>
+    </header>
+
+  <div id="dashBody">
+    <div id="recipeDetailCard">
+      <div id="recipeHeader">
+        <img id="recipeImage" src="/placeholder.svg" alt="Recipe Image" />
+        <div id="recipeHeaderInfo">
+          <h1 id="recipeName"></h1>
+          <div id="recipeMetadata">
+            <p><strong>Ready in:</strong> <span id="readyInMinutes"></span> minutes</p>
+            <p><strong>Servings:</strong> <span id="servings"></span></p>
+            <p><strong>Health Score:</strong> <span id="healthScore"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="recipeSection">
+        <h2>Summary</h2>
+        <div id="recipeSummary"></div>
+      </div>
+
+      <div id="recipeSection">
+        <h2>Ingredients</h2>
+        <ul id="ingredientsList"></ul>
+      </div>
+
+      <div id="recipeSection">
+        <h2>Instructions</h2>
+        <div id="instructionsList"></div>
+      </div>
+
+      <div id="recipeDiets">
+        <h3>Dietary Information</h3>
+        <div id="dietsContainer"></div>
+      </div>
+
+      <button onclick="goBack()" style="margin-top: 24px;">Back to Recipes</button>
+    </div>
+  </div>
+
+  <div id="footer">
+    <div id="leftFoot">
+      <p>
+        Made by Michael Bischoff and Brett Cuningham for our HCDD 411 class.
+        <br/>
+        Copyright 2025 nonexistant.
+      </p>
+    </div>
+    <div id="rightFoot">
+      <p>
+        This is the section that would usually have a bunch of stuff.
+        Stuff like a small quick navigation section, our social media,
+        a contact us link, about us, terms of service, privacy policy, 
+        etc. etc. blah blah blah blah blah. Lucky for us we have none of that.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
